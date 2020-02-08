@@ -99,10 +99,26 @@ class _HomePageState extends State<HomePage> {
           padding: EdgeInsets.fromLTRB(7, 4, 7, 4),
           child: LocalNav(localNavList: localNavList),
         ),
-
         Padding(
             padding: EdgeInsets.fromLTRB(7, 0, 7, 4),
             child: GridNav(gridNavModel: gridNav)),
+        ClipRRect(
+          borderRadius: BorderRadius.all(Radius.circular(11)),
+          child: Container(
+              color: Colors.white,
+              margin: EdgeInsets.only(top: 5,left: 8,right: 8),
+              child:Padding(
+                padding: EdgeInsets.all(10),
+                child:  GridView(
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 5,
+                  ),
+                  children: _subNavItems(),
+                ),
+              )),
+        ),
         Container(
           height: 1111,
           child: Text("hhh"),
@@ -167,6 +183,7 @@ class _HomePageState extends State<HomePage> {
       ],
     );
   }
+
   _onScroll(offset) {
     double alpha = offset / APPBAR_SCROLL_OFFSET;
     if (alpha < 0) {
@@ -178,5 +195,30 @@ class _HomePageState extends State<HomePage> {
       appBarAlpha = alpha;
     });
     print(appBarAlpha);
+  }
+
+  List<Widget> _subNavItems() {
+    List<Widget> subNavGridList = [];
+
+    subNavList.forEach((model) {
+      subNavGridList.add(_subNavItem(model));
+    });
+
+    return subNavGridList;
+  }
+
+  Widget _subNavItem(CommonModel model) {
+    return Container(
+      child: Column(
+        children: <Widget>[
+          Image.network(
+            model.icon,
+            width: 25,
+            height: 25,
+          ),
+          Padding(padding: EdgeInsets.only(top: 10), child: Text(model.title))
+        ],
+      ),
+    );
   }
 }
