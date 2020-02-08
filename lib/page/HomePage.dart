@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:flutter_trip_demo/bean/CommonModel.dart';
+import 'package:flutter_trip_demo/bean/GridNav.dart';
+import 'package:flutter_trip_demo/bean/LocalNavList.dart';
 import 'package:flutter_trip_demo/bean/home_model_entity.dart';
 import 'package:flutter_trip_demo/dao/HomeDao.dart';
+import 'package:flutter_trip_demo/widget/GridNav.dart';
+import 'package:flutter_trip_demo/widget/LocalNav.dart';
 import 'package:flutter_trip_demo/widget/search_bar.dart';
 
 class HomePage extends StatefulWidget {
@@ -10,12 +15,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<BannerList> bannerList = [];
-  List<LocalNavList> localNavList = [];
+  List<CommonModel> bannerList = [];
+  List<CommonModel> localNavList = [];
 
-  List<SubNavList> subNavList = [];
+  List<CommonModel> subNavList = [];
   Config config;
-  GridNav gridNav;
+  GridNavModel gridNav;
   SalesBox salesBox;
   double appBarAlpha = 0;
   bool _loading = true;
@@ -90,6 +95,14 @@ class _HomePageState extends State<HomePage> {
     return ListView(
       children: <Widget>[
         _banner(),
+        Padding(
+          padding: EdgeInsets.fromLTRB(7, 4, 7, 4),
+          child: LocalNav(localNavList: localNavList),
+        ),
+
+        Padding(
+            padding: EdgeInsets.fromLTRB(7, 0, 7, 4),
+            child: GridNav(gridNavModel: gridNav)),
         Container(
           height: 1111,
           child: Text("hhh"),
@@ -100,7 +113,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget _banner() {
     return Container(
-      height: 166,
+      height: 200,
       child: Swiper(
         itemCount: bannerList.length,
         autoplay: true,
